@@ -1,20 +1,5 @@
-class SubImage {
-  String image;
-  String image1;
-  String image2;
-
-  SubImage({this.image, this.image1, this.image2});
-}
-
-class MovieList {
-  String image;
-  List<SubImage> subImage;
-
-  String title;
-  String genre;
-
-  MovieList({this.image, this.subImage, this.title, this.genre});
-}
+import 'package:moviecatalog/models/movie_list.dart';
+import 'package:moviecatalog/models/sub_image.dart';
 
 List<MovieList> movieList = [
   MovieList(

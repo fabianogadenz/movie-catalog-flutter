@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'book_page.dart';
 import 'bottom_tabs.dart';
-import 'movie_list.dart';
+import '../data/movie_list.dart';
 
 class MovieApp extends StatefulWidget {
   @override

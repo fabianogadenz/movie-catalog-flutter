@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'movie_list.dart';
+import '../data/movie_list.dart';
 
 class BookPage extends StatefulWidget {
   final int index;
