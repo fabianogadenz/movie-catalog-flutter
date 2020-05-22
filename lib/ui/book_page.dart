@@ -15,16 +15,14 @@ class BookPage extends StatefulWidget {
 class _BookPageState extends State<BookPage> {
   double padding = 16.0;
   double radius = 24.0;
+
   // scroll
   double positionY = 410.0;
+
   // full scroll state signal
   bool isFullScrolled = false;
   String description =
-      "Joker is a 2019 American psychological thriller film directed by Todd Phillips, who co-wrote the screenplay with Scott Silver.";
-  String description1 =
-      "The film, based on DC Comics characters, stars Joaquin Phoenix as the Joker. An origin story set in 1981. the film follows Arthur Fleck, a mentally ill failed stand-up comedian who turns to a life of crime in Gotham City.";
-  String description2 =
-      "Robert De Niro, Zazie Beetz, Frances Controy, Brett Cullen, Glenn Fleshier, Forever alone in a crowd, failed conmedian Arthur Fleck walks the streets of Gotham City. Arthur wears two masks - the one he paints for his day job as a clown, and the guise he projects";
+      "Joker is a 2019 American psychological thriller film directed by Todd Phillips, who co-wrote the screenplay with Scott Silver. Joker is a 2019 American psychological thriller film directed by Todd Phillips, who co-wrote the screenplay with Scott Silver.  Joker is a 2019 American psychological thriller film directed by Todd Phillips, who co-wrote the screenplay with Scott Silver.  Joker is a 2019 American psychological thriller film directed by Todd Phillips, who co-wrote the screenplay with Scott Silver.  ";
 
   @override
   Widget build(BuildContext context) {
@@ -247,7 +245,7 @@ class _BookPageState extends State<BookPage> {
                             // description
                             Container(
                               padding: EdgeInsets.only(right: padding * 2),
-                              height: 150.0,
+//                              height: 150.0,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
@@ -257,21 +255,7 @@ class _BookPageState extends State<BookPage> {
                                     style: TextStyle(
                                         fontSize: 14.0, color: Colors.black, fontWeight: FontWeight.w600, height: 1.5),
                                   ),
-                                  Text(
-                                    description1,
-                                    style: TextStyle(
-                                        fontSize: 14.0, color: Colors.black, fontWeight: FontWeight.w600, height: 1.5),
-                                  ),
                                 ],
-                              ),
-                            ),
-                            // description 2
-                            Padding(
-                              padding: EdgeInsets.only(right: padding),
-                              child: Text(
-                                description2,
-                                style: TextStyle(
-                                    fontSize: 14.0, color: Colors.black, fontWeight: FontWeight.w600, height: 1.5),
                               ),
                             ),
                           ],
