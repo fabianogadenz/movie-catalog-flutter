@@ -13,16 +13,12 @@ class BookPage extends StatefulWidget {
 }
 
 class _BookPageState extends State<BookPage> {
-  // double
   double padding = 16.0;
   double radius = 24.0;
-
   // scroll
   double positionY = 410.0;
-
   // full scroll state signal
   bool isFullScrolled = false;
-
   String description =
       "Joker is a 2019 American psychological thriller film directed by Todd Phillips, who co-wrote the screenplay with Scott Silver.";
   String description1 =
@@ -32,15 +28,11 @@ class _BookPageState extends State<BookPage> {
 
   @override
   Widget build(BuildContext context) {
-    // device screen height
     final screenHeight = MediaQuery.of(context).size.height;
-
-    // device screen width
     final screenWidth = MediaQuery.of(context).size.width;
 
     // max position
     double maxPositionY = screenHeight - 80.0;
-
     // minimun position
     double minimumPositionY = screenHeight * 0.60;
 
@@ -83,8 +75,7 @@ class _BookPageState extends State<BookPage> {
                         // back
                         Navigator.pop(context);
                       },
-                      icon: Icon(Icons.arrow_back,
-                          size: 28.0, color: Colors.white),
+                      icon: Icon(Icons.arrow_back, size: 28.0, color: Colors.white),
                     ),
 
                     isFullScrolled
@@ -100,8 +91,7 @@ class _BookPageState extends State<BookPage> {
                                 Flexible(
                                   fit: FlexFit.tight,
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       // title
@@ -130,26 +120,22 @@ class _BookPageState extends State<BookPage> {
                                 // icon
                                 IconButton(
                                   onPressed: () {},
-                                  icon: Icon(Icons.play_circle_outline,
-                                      size: 28.0, color: Colors.white),
+                                  icon: Icon(Icons.play_circle_outline, size: 28.0, color: Colors.white),
                                 ),
                               ],
                             ),
                           )
                         : Spacer(),
-
                     // right icon
                     IconButton(
                       onPressed: () {},
-                      icon: Icon(Icons.bookmark_border,
-                          size: 28.0, color: Colors.white),
+                      icon: Icon(Icons.bookmark_border, size: 28.0, color: Colors.white),
                     ),
                   ],
                 ),
               ),
             ),
           ),
-
           // white bottom container
           Positioned(
             left: 0,
@@ -162,8 +148,7 @@ class _BookPageState extends State<BookPage> {
                   positionY -= dragDetails.delta.dy;
 
                   if (positionY > maxPositionY) positionY = maxPositionY;
-                  if (positionY < minimumPositionY)
-                    positionY = minimumPositionY;
+                  if (positionY < minimumPositionY) positionY = minimumPositionY;
 
                   print("positionY = $positionY");
 
@@ -175,8 +160,7 @@ class _BookPageState extends State<BookPage> {
               },
               onVerticalDragEnd: (DragEndDetails dragDetails) {
                 setState(() {
-                  if (positionY >=
-                      minimumPositionY + (maxPositionY - minimumPositionY) / 2)
+                  if (positionY >= minimumPositionY + (maxPositionY - minimumPositionY) / 2)
                     positionY = maxPositionY;
                   else
                     positionY = minimumPositionY;
@@ -199,10 +183,7 @@ class _BookPageState extends State<BookPage> {
                       left: 0,
                       right: 0,
                       child: Container(
-                        padding: EdgeInsets.only(
-                            top: padding * 2,
-                            left: padding,
-                            bottom: padding * 2),
+                        padding: EdgeInsets.only(top: padding * 2, left: padding, bottom: padding * 2),
                         height: maxPositionY + 50.0,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.only(
@@ -228,8 +209,7 @@ class _BookPageState extends State<BookPage> {
                                     margin: EdgeInsets.only(bottom: padding),
                                     height: 100.0,
                                     child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: <Widget>[
                                         // title
                                         Text(
@@ -275,18 +255,12 @@ class _BookPageState extends State<BookPage> {
                                   Text(
                                     description,
                                     style: TextStyle(
-                                        fontSize: 14.0,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w600,
-                                        height: 1.5),
+                                        fontSize: 14.0, color: Colors.black, fontWeight: FontWeight.w600, height: 1.5),
                                   ),
                                   Text(
                                     description1,
                                     style: TextStyle(
-                                        fontSize: 14.0,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w600,
-                                        height: 1.5),
+                                        fontSize: 14.0, color: Colors.black, fontWeight: FontWeight.w600, height: 1.5),
                                   ),
                                 ],
                               ),
@@ -297,10 +271,7 @@ class _BookPageState extends State<BookPage> {
                               child: Text(
                                 description2,
                                 style: TextStyle(
-                                    fontSize: 14.0,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w600,
-                                    height: 1.5),
+                                    fontSize: 14.0, color: Colors.black, fontWeight: FontWeight.w600, height: 1.5),
                               ),
                             ),
                           ],
@@ -364,19 +335,11 @@ class _BookPageState extends State<BookPage> {
             right: 0,
             bottom: 0,
             child: Container(
-              padding: EdgeInsets.only(
-                  top: padding * 2.5,
-                  left: padding,
-                  right: padding,
-                  bottom: padding),
+              padding: EdgeInsets.only(top: padding * 2.5, left: padding, right: padding, bottom: padding),
               height: 105.0,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [
-                    Colors.white.withOpacity(0.5),
-                    Colors.white,
-                    Colors.white
-                  ],
+                  colors: [Colors.white.withOpacity(0.5), Colors.white, Colors.white],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                 ),
@@ -444,7 +407,6 @@ class _BookPageState extends State<BookPage> {
     );
   }
 }
-
 
 class ChartPaint extends CustomPainter {
   @override

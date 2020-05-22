@@ -16,10 +16,10 @@ class BottomTabs extends StatelessWidget {
         duration: Duration(milliseconds: 200),
         curve: Curves.fastOutSlowIn,
         height: 40.0,
-        width: isSelected? 120.0 : 110.0,
+        width: isSelected ? 120.0 : 110.0,
         decoration: ShapeDecoration(
           shape: StadiumBorder(),
-          color: isSelected? Colors.grey[200] : Colors.white,
+          color: isSelected ? Colors.grey[200] : Colors.white,
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -27,13 +27,17 @@ class BottomTabs extends StatelessWidget {
           children: <Widget>[
             // icon
             Icon(icon, size: 24.0, color: Colors.black),
-
             // text
-            isSelected? Text(text,
-              style: TextStyle(
-                fontSize: 14.0, color: Colors.black, fontWeight: FontWeight.bold,
-              ),
-            ) : Container(),
+            isSelected
+                ? Text(
+                    text,
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )
+                : Container(),
           ],
         ),
       ),
