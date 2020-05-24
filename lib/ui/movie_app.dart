@@ -172,7 +172,6 @@ class _MovieAppState extends State<MovieApp> {
                 padding: EdgeInsets.only(top: padding / 2),
                 margin: EdgeInsets.only(bottom: padding * 2),
                 height: 400.0,
-                //aqui
                 child: Observer(builder: (BuildContext context) {
                   UpComing upComing = movieApiStore.upComing;
                   return (upComing != null)
@@ -188,7 +187,8 @@ class _MovieAppState extends State<MovieApp> {
                           itemBuilder: (context, index) {
                             return GestureDetector(
                               onTap: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => BookPage(index, upComing.results[index])));
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) => BookPage(index, upComing.results[index])));
                               },
                               child: Transform.translate(
                                 offset: Offset(-padding * 3, 0.0),

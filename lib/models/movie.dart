@@ -24,7 +24,7 @@ class Movie {
         this.backdropPath,
         this.originalLanguage,
         this.originalTitle,
-        this.genreIds,
+//        this.genreIds,
         this.title,
 //        this.voteAverage,
         this.overview,
@@ -40,7 +40,7 @@ class Movie {
     backdropPath = json['backdrop_path'];
     originalLanguage = json['original_language'];
     originalTitle = json['original_title'];
-    genreIds = json['genre_ids'].cast<int>();
+//    genreIds = json['genre_ids'].cast<int>();
     title = json['title'];
 //    voteAverage = json['vote_average'];
     overview = json['overview'];
@@ -58,7 +58,7 @@ class Movie {
     data['backdrop_path'] = this.backdropPath;
     data['original_language'] = this.originalLanguage;
     data['original_title'] = this.originalTitle;
-    data['genre_ids'] = this.genreIds;
+//    data['genre_ids'] = this.genreIds;
     data['title'] = this.title;
 //    data['vote_average'] = this.voteAverage;
     data['overview'] = this.overview;

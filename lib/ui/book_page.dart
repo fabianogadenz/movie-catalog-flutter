@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:moviecatalog/data/movieapi_store.dart';
 import 'package:moviecatalog/models/movie.dart';
-import 'package:moviecatalog/models/up_coming.dart';
+import 'package:moviecatalog/models/movie_detail.dart';
 import '../data/movie_list.dart';
 
 class BookPage extends StatefulWidget {
@@ -28,11 +28,17 @@ class _BookPageState extends State<BookPage> {
   bool isFullScrolled = false;
   String description =
       "Joker is a 2019 American psychological thriller film directed by Todd Phillips, who co-wrote the screenplay with Scott Silver. Joker is a 2019 American psychological thriller film directed by Todd Phillips, who co-wrote the screenplay with Scott Silver.  Joker is a 2019 American psychological thriller film directed by Todd Phillips, who co-wrote the screenplay with Scott Silver.  Joker is a 2019 American psychological thriller film directed by Todd Phillips, who co-wrote the screenplay with Scott Silver.  ";
+  MovieApiStore movieApiStore;
+
+  @override
+  void initState() {
+    super.initState();
+    movieApiStore = MovieApiStore();
+    movieApiStore.fetchMovie(widget.movie.id);
+  }
 
   @override
   Widget build(BuildContext context) {
-    MovieApiStore movieApiStore = MovieApiStore();
-
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
 
@@ -46,29 +52,17 @@ class _BookPageState extends State<BookPage> {
         children: <Widget>[
           // top image
           Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: screenHeight * 0.35,
-            // use hero widget
-            child: Observer(builder: (BuildContext context) {
-              if (widget.movie != null)
-                return Hero(
-                    tag: "movie ${widget.index}",
-                    child: Image.network(
-                      "http://image.tmdb.org/t/p/w500/" + widget.movie.posterPath,
-                      fit: BoxFit.fill,
-                    ));
-              else
-                return Hero(
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: screenHeight * 0.35,
+              // use hero widget
+              child: Hero(
                   tag: "movie ${widget.index}",
-                  child: Image.asset(
-                    movieList[widget.index].image,
+                  child: Image.network(
+                    "http://image.tmdb.org/t/p/w500/" + widget.movie.posterPath,
                     fit: BoxFit.fill,
-                  ),
-                );
-            }),
-          ),
+                  ))),
           // appbar
           Positioned(
             top: 0,
@@ -100,42 +94,40 @@ class _BookPageState extends State<BookPage> {
                               children: <Widget>[
                                 // spacer
                                 Container(height: 28.0, width: 52.0),
-
                                 // column text
                                 Flexible(
-                                  fit: FlexFit.tight,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      // title
-                                      Text(
-                                        movieList[widget.index].title,
-                                        style: TextStyle(
-                                          fontSize: 28.0,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-
-                                      // runtime
-                                      Text(
-                                        "Runtime: 122 minutes",
-                                        style: TextStyle(
-                                          fontSize: 14.0,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-
-                                // icon
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(Icons.play_circle_outline, size: 28.0, color: Colors.white),
-                                ),
+                                    fit: FlexFit.tight,
+                                    child: Observer(builder: (BuildContext context) {
+                                      MovieDetail movie = movieApiStore.movieSelected;
+                                      return (movie != null)
+                                          ? Column(
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: <Widget>[
+                                                // title
+                                                Expanded(
+                                                  child: Text(
+                                                    movie.title,
+                                                    style: TextStyle(
+                                                      fontSize: 20.0,
+                                                      color: Colors.white,
+                                                      fontWeight: FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ),
+                                                // runtime
+                                                Text(
+                                                  'Duração: ${movie.runtime.toString()} minutos',
+                                                  style: TextStyle(
+                                                    fontSize: 14.0,
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.w400,
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          : Center(child: CircularProgressIndicator());
+                                    })),
                               ],
                             ),
                           )
@@ -163,9 +155,7 @@ class _BookPageState extends State<BookPage> {
 
                   if (positionY > maxPositionY) positionY = maxPositionY;
                   if (positionY < minimumPositionY) positionY = minimumPositionY;
-
-                  print("positionY = $positionY");
-
+//                  print("positionY = $positionY");
                   if (positionY == maxPositionY)
                     isFullScrolled = true;
                   else
@@ -222,40 +212,49 @@ class _BookPageState extends State<BookPage> {
                                 : Container(
                                     margin: EdgeInsets.only(bottom: padding),
                                     height: 100.0,
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        // title
-                                        Text(
-                                          movieList[widget.index].title,
-                                          style: TextStyle(
-                                            fontSize: 40.0,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
+                                    child: Observer(builder: (BuildContext context) {
+                                      return (movieApiStore.movieSelected != null)
+                                          ? Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: <Widget>[
+                                                //aqui
+                                                // title
+                                                Text(
+                                                  movieApiStore.movieSelected.title,
+                                                  style: TextStyle(
+                                                    fontSize: 30.0,
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
 
-                                        // genre
-                                        Text(
-                                          movieList[widget.index].genre,
-                                          style: TextStyle(
-                                              fontSize: 14.0,
-                                              color: Colors.grey[500],
-                                              fontWeight: FontWeight.w600,
-                                              height: 1.5),
-                                        ),
+                                                // genre
+                                                Text(
+                                                  movieApiStore.movieSelected.originalTitle,
+                                                  style: TextStyle(
+                                                      fontSize: 14.0,
+                                                      color: Colors.grey[500],
+                                                      fontWeight: FontWeight.w600,
+                                                      height: 1.5),
+                                                ),
 
-                                        // runtime
-                                        Text(
-                                          "Runtime: 2h 2min",
-                                          style: TextStyle(
-                                              fontSize: 14.0,
-                                              color: Colors.grey[500],
-                                              fontWeight: FontWeight.w600,
-                                              height: 1.5),
-                                        ),
-                                      ],
-                                    ),
+                                                // runtime
+                                                Text(
+                                                  "Duração: " + movieApiStore.movieSelected.runtime.toString() + " minutos",
+                                                  style: TextStyle(
+                                                      fontSize: 14.0,
+                                                      color: Colors.grey[500],
+                                                      fontWeight: FontWeight.w600,
+                                                      height: 1.5),
+                                                ),
+                                              ],
+                                            )
+                                          : Column(
+                                              children: <Widget>[
+                                                Container(),
+                                              ],
+                                            );
+                                    }),
                                   ),
 
                             // description
@@ -265,12 +264,18 @@ class _BookPageState extends State<BookPage> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  // description
-                                  Text(
-                                    description,
-                                    style: TextStyle(
-                                        fontSize: 14.0, color: Colors.black, fontWeight: FontWeight.w600, height: 1.5),
-                                  ),
+                                  Observer(builder: (BuildContext context) {
+                                    return (movieApiStore.movieSelected != null)
+                                        ? Text(
+                                            movieApiStore.movieSelected.overview,
+                                            style: TextStyle(
+                                                fontSize: 14.0,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w600,
+                                                height: 1.5),
+                                          )
+                                        : Center(child: CircularProgressIndicator());
+                                  })
                                 ],
                               ),
                             ),

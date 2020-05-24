@@ -9,18 +9,48 @@ part of 'movieapi_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$MovieApiStore on _MovieApiStoreBase, Store {
-  final _$upComingAtom = Atom(name: '_MovieApiStoreBase.upComing');
+  Computed<UpComing> _$upComingComputed;
 
   @override
-  UpComing get upComing {
-    _$upComingAtom.reportRead();
-    return super.upComing;
+  UpComing get upComing =>
+      (_$upComingComputed ??= Computed<UpComing>(() => super.upComing,
+              name: '_MovieApiStoreBase.upComing'))
+          .value;
+  Computed<MovieDetail> _$movieSelectedComputed;
+
+  @override
+  MovieDetail get movieSelected => (_$movieSelectedComputed ??=
+          Computed<MovieDetail>(() => super.movieSelected,
+              name: '_MovieApiStoreBase.movieSelected'))
+      .value;
+
+  final _$_upComingAtom = Atom(name: '_MovieApiStoreBase._upComing');
+
+  @override
+  UpComing get _upComing {
+    _$_upComingAtom.reportRead();
+    return super._upComing;
   }
 
   @override
-  set upComing(UpComing value) {
-    _$upComingAtom.reportWrite(value, super.upComing, () {
-      super.upComing = value;
+  set _upComing(UpComing value) {
+    _$_upComingAtom.reportWrite(value, super._upComing, () {
+      super._upComing = value;
+    });
+  }
+
+  final _$_movieSelectedAtom = Atom(name: '_MovieApiStoreBase._movieSelected');
+
+  @override
+  MovieDetail get _movieSelected {
+    _$_movieSelectedAtom.reportRead();
+    return super._movieSelected;
+  }
+
+  @override
+  set _movieSelected(MovieDetail value) {
+    _$_movieSelectedAtom.reportWrite(value, super._movieSelected, () {
+      super._movieSelected = value;
     });
   }
 
@@ -39,9 +69,21 @@ mixin _$MovieApiStore on _MovieApiStoreBase, Store {
   }
 
   @override
+  dynamic fetchMovie(int id) {
+    final _$actionInfo = _$_MovieApiStoreBaseActionController.startAction(
+        name: '_MovieApiStoreBase.fetchMovie');
+    try {
+      return super.fetchMovie(id);
+    } finally {
+      _$_MovieApiStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
-upComing: ${upComing}
+upComing: ${upComing},
+movieSelected: ${movieSelected}
     ''';
   }
 }
