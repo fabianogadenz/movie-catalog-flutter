@@ -5,7 +5,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:moviecatalog/data/movieapi_store.dart';
 import 'package:moviecatalog/models/movie.dart';
 import 'package:moviecatalog/models/movie_detail.dart';
-import '../data/movie_list.dart';
 
 class BookPage extends StatefulWidget {
   final int index;
@@ -240,7 +239,9 @@ class _BookPageState extends State<BookPage> {
 
                                                 // runtime
                                                 Text(
-                                                  "Duração: " + movieApiStore.movieSelected.runtime.toString() + " minutos",
+                                                  "Duração: " +
+                                                      movieApiStore.movieSelected.runtime.toString() +
+                                                      " minutos",
                                                   style: TextStyle(
                                                       fontSize: 14.0,
                                                       color: Colors.grey[500],
@@ -361,7 +362,7 @@ class _BookPageState extends State<BookPage> {
                       ),
                       child: Center(
                         child: Text(
-                          "Buy Ticket".toUpperCase(),
+                          "Recomendar".toUpperCase(),
                           style: TextStyle(
                             fontSize: 14.0,
                             color: Colors.white,
@@ -374,35 +375,40 @@ class _BookPageState extends State<BookPage> {
 
                   SizedBox(width: padding * 2),
 
-                  // circlualr progress
-                  Flexible(
-                    child: Stack(
-                      children: <Widget>[
-                        // circular chart
-                        Positioned.fill(
-                          child: Center(
-                            child: CustomPaint(
-                              painter: ChartPaint(),
+                  Observer(builder: (BuildContext context) {
+                    return (movieApiStore.movieSelected != null)
+                        ? Flexible(
+                            child: Stack(
+                              children: <Widget>[
+                                Positioned.fill(
+                                  child: Center(
+                                    child: CustomPaint(
+                                      painter: ChartPaint(movieApiStore.movieSelected.voteAverage),
+                                    ),
+                                  ),
+                                ),
+                                Positioned.fill(
+                                    child: Center(
+                                        child: Text(
+                                  movieApiStore.movieSelected.voteAverage.toString(),
+                                  style: TextStyle(
+                                    fontSize: 12.0,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ))),
+                              ],
                             ),
-                          ),
-                        ),
-
-                        // center text
-                        Positioned.fill(
-                          child: Center(
-                            child: Text(
-                              "9.1",
-                              style: TextStyle(
-                                fontSize: 12.0,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600,
+                          )
+                        : Flexible(
+                            child: Stack(children: <Widget>[
+                            Positioned.fill(
+                              child: Center(
+                                child: CircularProgressIndicator()
                               ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                            )
+                          ]));
+                  })
                 ],
               ),
             ),
@@ -414,11 +420,15 @@ class _BookPageState extends State<BookPage> {
 }
 
 class ChartPaint extends CustomPainter {
+  final double rating;
+
+  ChartPaint(this.rating);
+
   @override
   void paint(Canvas canvas, Size size) {
     Rect rect = Rect.fromCircle(center: Offset(0.0, 0.0), radius: 16.0);
     double startAngle = -pi / 2;
-    double sweepAngle = pi * 2 * 0.91;
+    double sweepAngle = pi * 2 * (rating / 10);
 
     var paint = Paint()
       ..color = Colors.black

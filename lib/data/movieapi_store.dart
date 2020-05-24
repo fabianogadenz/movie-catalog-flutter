@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:mobx/mobx.dart';
 import 'package:moviecatalog/data/consts.dart';
-import 'package:moviecatalog/models/movie.dart';
 import 'package:moviecatalog/models/movie_detail.dart';
 import 'package:moviecatalog/models/up_coming.dart';
 import 'package:http/http.dart' as http;

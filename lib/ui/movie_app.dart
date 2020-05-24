@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:moviecatalog/data/movieapi_store.dart';
@@ -154,7 +152,6 @@ class _MovieAppState extends State<MovieApp> {
                 ),
               ),
 
-              // text : recent
               Padding(
                 padding: EdgeInsets.only(left: padding),
                 child: Text(
@@ -167,7 +164,6 @@ class _MovieAppState extends State<MovieApp> {
                 ),
               ),
 
-              // movie pageview
               Container(
                 padding: EdgeInsets.only(top: padding / 2),
                 margin: EdgeInsets.only(bottom: padding * 2),
@@ -264,8 +260,17 @@ class _MovieAppState extends State<MovieApp> {
                       : Center(child: CircularProgressIndicator());
                 }),
               ),
-
-              // bottom list
+              Padding(
+                padding: EdgeInsets.only(left: padding),
+                child: Text(
+                  "Mais vistos",
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
               Container(
                 margin: EdgeInsets.only(left: padding, bottom: padding * 5),
                 height: 250.0,
