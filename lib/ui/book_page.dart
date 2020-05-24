@@ -1,12 +1,17 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:moviecatalog/data/movieapi_store.dart';
+import 'package:moviecatalog/models/movie.dart';
+import 'package:moviecatalog/models/up_coming.dart';
 import '../data/movie_list.dart';
 
 class BookPage extends StatefulWidget {
   final int index;
+  final Movie movie;
 
-  BookPage(this.index);
+  BookPage(this.index, this.movie);
 
   @override
   _BookPageState createState() => _BookPageState();
@@ -26,6 +31,8 @@ class _BookPageState extends State<BookPage> {
 
   @override
   Widget build(BuildContext context) {
+    MovieApiStore movieApiStore = MovieApiStore();
+
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
 
@@ -44,15 +51,24 @@ class _BookPageState extends State<BookPage> {
             right: 0,
             bottom: screenHeight * 0.35,
             // use hero widget
-            child: Hero(
-              tag: "movie ${widget.index}",
-              child: Image.asset(
-                movieList[widget.index].image,
-                fit: BoxFit.fill,
-              ),
-            ),
+            child: Observer(builder: (BuildContext context) {
+              if (widget.movie != null)
+                return Hero(
+                    tag: "movie ${widget.index}",
+                    child: Image.network(
+                      "http://image.tmdb.org/t/p/w500/" + widget.movie.posterPath,
+                      fit: BoxFit.fill,
+                    ));
+              else
+                return Hero(
+                  tag: "movie ${widget.index}",
+                  child: Image.asset(
+                    movieList[widget.index].image,
+                    fit: BoxFit.fill,
+                  ),
+                );
+            }),
           ),
-
           // appbar
           Positioned(
             top: 0,

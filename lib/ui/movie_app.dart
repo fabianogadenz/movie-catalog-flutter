@@ -1,6 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:moviecatalog/data/movieapi_store.dart';
+import 'package:moviecatalog/models/up_coming.dart';
 import 'book_page.dart';
 import 'bottom_tabs.dart';
 import '../data/movie_list.dart';
@@ -29,14 +32,15 @@ class _MovieAppState extends State<MovieApp> {
 
   // pageview controller
   PageController _pageController;
+  MovieApiStore movieApiStore = MovieApiStore();
 
   // pageview index
   int _selectedIndex = 0;
 
   @override
   void initState() {
-    _pageController =
-        PageController(initialPage: _selectedIndex, viewportFraction: 0.70);
+    movieApiStore.fetchUpcomingList();
+    _pageController = PageController(initialPage: _selectedIndex, viewportFraction: 0.70);
     super.initState();
   }
 
@@ -168,103 +172,97 @@ class _MovieAppState extends State<MovieApp> {
                 padding: EdgeInsets.only(top: padding / 2),
                 margin: EdgeInsets.only(bottom: padding * 2),
                 height: 400.0,
-                child: PageView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: movieList.length,
-                    controller: _pageController,
-                    onPageChanged: (int selectedIndex) {
-                      setState(() {
-                        _selectedIndex = selectedIndex;
-                      });
-                    },
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => BookPage(index)));
-                        },
-                        child: Transform.translate(
-                          offset: Offset(-padding * 3, 0.0),
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                                vertical:
-                                    (_selectedIndex - index).abs().toDouble() *
-                                        padding *
-                                        2),
-                            margin: EdgeInsets.only(right: padding * 2),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                // movie poster image
-                                Hero(
-//                                tag: "movie ${widget.index}",
-                                  tag: "movie $index",
-                                  child: Container(
-                                    margin:
-                                        EdgeInsets.only(bottom: padding / 2),
-                                    height:
-                                        _selectedIndex == index ? 338.0 : 270.0,
-                                    decoration: BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.circular(radius),
-                                      image: DecorationImage(
-                                        image:
-                                            AssetImage(movieList[index].image),
-                                        fit: BoxFit.fill,
-                                      ),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black12,
-                                          spreadRadius: 2,
-                                          blurRadius: 2,
-                                          offset: Offset(4.0, 4.0),
-                                        )
-                                      ],
-                                    ),
-//                            child: Placeholder(),
-                                  ),
-                                ),
-
-                                // text column
-                                Container(
-                                  margin: EdgeInsets.only(left: padding),
-                                  height: 40.0,
+                //aqui
+                child: Observer(builder: (BuildContext context) {
+                  UpComing upComing = movieApiStore.upComing;
+                  return (upComing != null)
+                      ? PageView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: upComing.results.length,
+                          controller: _pageController,
+                          onPageChanged: (int selectedIndex) {
+                            setState(() {
+                              _selectedIndex = selectedIndex;
+                            });
+                          },
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => BookPage(index, upComing.results[index])));
+                              },
+                              child: Transform.translate(
+                                offset: Offset(-padding * 3, 0.0),
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: (_selectedIndex - index).abs().toDouble() * padding * 2),
+                                  margin: EdgeInsets.only(right: padding * 2),
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: <Widget>[
-                                      // text : title
-                                      Text(
-                                        movieList[index].title,
-                                        style: TextStyle(
-                                          fontSize: 18.0,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
+                                      // movie poster image
+                                      Hero(
+                                        tag: "movie $index",
+                                        child: Container(
+                                          margin: EdgeInsets.only(bottom: padding / 2),
+                                          height: _selectedIndex == index ? 338.0 : 270.0,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(radius),
+                                            image: DecorationImage(
+                                              image: NetworkImage("http://image.tmdb.org/t/p/w300/" +
+                                                  upComing.results[index].posterPath),
+                                              fit: BoxFit.fill,
+                                            ),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.black12,
+                                                spreadRadius: 2,
+                                                blurRadius: 2,
+                                                offset: Offset(4.0, 4.0),
+                                              )
+                                            ],
+                                          ),
+//                            child: Placeholder(),
                                         ),
                                       ),
 
-                                      // text : genre
-                                      Text(
-                                        movieList[index].genre,
-                                        style: TextStyle(
-                                          fontSize: 12.0,
-                                          color: Colors.grey,
-                                          fontWeight: FontWeight.w400,
+                                      // text column
+                                      Container(
+                                        margin: EdgeInsets.only(left: padding),
+                                        height: 40.0,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                          children: <Widget>[
+                                            // text : title
+                                            Text(
+                                              upComing.results[index].title,
+                                              style: TextStyle(
+                                                fontSize: 18.0,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+
+                                            // text : genre
+                                            Text(
+                                              upComing.results[index].originalTitle,
+                                              style: TextStyle(
+                                                fontSize: 12.0,
+                                                color: Colors.grey,
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ],
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    }),
+                              ),
+                            );
+                          })
+                      : Center(child: CircularProgressIndicator());
+                }),
               ),
 
               // bottom list
@@ -284,9 +282,7 @@ class _MovieAppState extends State<MovieApp> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(radius),
                         image: DecorationImage(
-                          image: AssetImage(
-                            movieList[index].image,
-                          ),
+                          image: NetworkImage("http://image.tmdb.org/t/p/w300/yHsu8swJSgqDrsPiu7adBjOPLlp.jpg"),
                           fit: BoxFit.fill,
                         ),
                         boxShadow: [
