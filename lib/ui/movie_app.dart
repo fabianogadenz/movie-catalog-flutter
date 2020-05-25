@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:moviecatalog/data/movieapi_store.dart';
+import 'package:moviecatalog/models/popular_movies.dart';
 import 'package:moviecatalog/models/up_coming.dart';
 import 'book_page.dart';
 import 'bottom_tabs.dart';
@@ -38,6 +39,8 @@ class _MovieAppState extends State<MovieApp> {
   @override
   void initState() {
     movieApiStore.fetchUpcomingList();
+    movieApiStore.fetchPopularList();
+
     _pageController = PageController(initialPage: _selectedIndex, viewportFraction: 0.70);
     super.initState();
   }
@@ -272,38 +275,49 @@ class _MovieAppState extends State<MovieApp> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(left: padding, bottom: padding * 5),
-                height: 250.0,
-                child: ListView.builder(
-                  padding: EdgeInsets.zero,
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  itemCount: movieList.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      margin: EdgeInsets.only(right: padding),
-                      height: 250.0,
-                      width: 150.0,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(radius),
-                        image: DecorationImage(
-                          image: NetworkImage("http://image.tmdb.org/t/p/w300/yHsu8swJSgqDrsPiu7adBjOPLlp.jpg"),
-                          fit: BoxFit.fill,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            spreadRadius: 2,
-                            blurRadius: 2,
-                            offset: Offset(2.0, 2.0),
-                          )
-                        ],
-                      ),
+                  margin: EdgeInsets.only(left: padding, bottom: padding * 5),
+                  height: 250.0,
+                  child: Observer(builder: (BuildContext context) {
+                    PopularMovies popular = movieApiStore.popular;
+                    return (popular != null)
+                        ? ListView.builder(
+                            padding: EdgeInsets.zero,
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            itemCount: popular.results.length,
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                onTap: (){
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) => BookPage(index, popular.results[index])));
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.only(right: padding),
+                                  height: 250.0,
+                                  width: 150.0,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(radius),
+                                    image: DecorationImage(
+                                      image:
+                                          NetworkImage("http://image.tmdb.org/t/p/w300/" + popular.results[index].posterPath),
+                                      fit: BoxFit.fill,
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black12,
+                                        spreadRadius: 2,
+                                        blurRadius: 2,
+                                        offset: Offset(2.0, 2.0),
+                                      )
+                                    ],
+                                  ),
 //                        child: Placeholder(),
-                    );
-                  },
-                ),
-              ),
+                                ),
+                              );
+                            },
+                          )
+                        : Center(child: CircularProgressIndicator());
+                  })),
             ],
           ),
         ),

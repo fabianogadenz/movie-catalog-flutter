@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:mobx/mobx.dart';
 import 'package:moviecatalog/data/consts.dart';
 import 'package:moviecatalog/models/movie_detail.dart';
+import 'package:moviecatalog/models/popular_movies.dart';
 import 'package:moviecatalog/models/up_coming.dart';
 import 'package:http/http.dart' as http;
 
@@ -18,6 +19,12 @@ abstract class _MovieApiStoreBase with Store {
 
 
   @observable
+  PopularMovies _popular;
+  @computed
+  PopularMovies get popular => _popular;
+
+
+  @observable
   MovieDetail _movieSelected;
   @computed
   MovieDetail get movieSelected => _movieSelected;
@@ -26,6 +33,12 @@ abstract class _MovieApiStoreBase with Store {
   fetchUpcomingList() {
     _upComing = null;
     loadUpComingAPI().then((valueList) => _upComing = valueList);
+  }
+
+  @action
+  fetchPopularList() {
+    _popular = null;
+    loadPopularMoviesAPI().then((valueList) => _popular = valueList);
   }
 
   @action
@@ -56,6 +69,19 @@ abstract class _MovieApiStoreBase with Store {
       return movieDetail;
     } catch (error, e) {
       print("Erro ao carregar movie " + e.toString() + error.toString());
+      return null;
+    }
+  }
+
+  Future<PopularMovies> loadPopularMoviesAPI() async {
+    try {
+      print(Consts.popularURL);
+      final response = await http.get(Consts.popularURL);
+      var decodeJson = jsonDecode(response.body);
+      PopularMovies results = PopularMovies.fromJson(decodeJson);
+      return results;
+    } catch (error, e) {
+      print("Erro ao carregar lista " + e.toString() + error.toString());
       return null;
     }
   }

@@ -16,6 +16,13 @@ mixin _$MovieApiStore on _MovieApiStoreBase, Store {
       (_$upComingComputed ??= Computed<UpComing>(() => super.upComing,
               name: '_MovieApiStoreBase.upComing'))
           .value;
+  Computed<PopularMovies> _$popularComputed;
+
+  @override
+  PopularMovies get popular =>
+      (_$popularComputed ??= Computed<PopularMovies>(() => super.popular,
+              name: '_MovieApiStoreBase.popular'))
+          .value;
   Computed<MovieDetail> _$movieSelectedComputed;
 
   @override
@@ -36,6 +43,21 @@ mixin _$MovieApiStore on _MovieApiStoreBase, Store {
   set _upComing(UpComing value) {
     _$_upComingAtom.reportWrite(value, super._upComing, () {
       super._upComing = value;
+    });
+  }
+
+  final _$_popularAtom = Atom(name: '_MovieApiStoreBase._popular');
+
+  @override
+  PopularMovies get _popular {
+    _$_popularAtom.reportRead();
+    return super._popular;
+  }
+
+  @override
+  set _popular(PopularMovies value) {
+    _$_popularAtom.reportWrite(value, super._popular, () {
+      super._popular = value;
     });
   }
 
@@ -69,6 +91,17 @@ mixin _$MovieApiStore on _MovieApiStoreBase, Store {
   }
 
   @override
+  dynamic fetchPopularList() {
+    final _$actionInfo = _$_MovieApiStoreBaseActionController.startAction(
+        name: '_MovieApiStoreBase.fetchPopularList');
+    try {
+      return super.fetchPopularList();
+    } finally {
+      _$_MovieApiStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic fetchMovie(int id) {
     final _$actionInfo = _$_MovieApiStoreBaseActionController.startAction(
         name: '_MovieApiStoreBase.fetchMovie');
@@ -83,6 +116,7 @@ mixin _$MovieApiStore on _MovieApiStoreBase, Store {
   String toString() {
     return '''
 upComing: ${upComing},
+popular: ${popular},
 movieSelected: ${movieSelected}
     ''';
   }

@@ -4,9 +4,15 @@ class Consts {
   static const String baseAPILanguage = "pt-BR";
 
   static const String upComingURL =
-      '$baseAPIUrl/upcoming?api_key=$baseAPIKey&language=$baseAPILanguage&page=1';
+      '$baseAPIUrl/upcoming?api_key=$baseAPIKey&language=$baseAPILanguage&page=1&';
 
   static String movieDetailURL(int id){
     return '$baseAPIUrl/$id?api_key=$baseAPIKey&language=$baseAPILanguage';
   }
+
+  static String popularURL =
+      '$baseAPIUrl/popular?api_key=$baseAPIKey&language=pt-BR&page=1&region=BR';
+
+
+
 }
