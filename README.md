@@ -27,8 +27,8 @@
 
 ### Screens preview
 Home Screen: <br/>
-<img src="screenshots/screen2.png" /> <br/>
+<img src="assets/screenshots/screen2.png" /> <br/>
 Detail Screen: <br/>
-<img src="screenshots/screen1.png" /> <br/>
+<img src="assets/screenshots/screen1.png" /> <br/>
 
 ### <a href="https://www.linkedin.com/in/fabiano-gadenz-9186b0154/">Connect me in LinkedIn</a>
