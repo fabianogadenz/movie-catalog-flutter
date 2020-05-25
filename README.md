@@ -1,16 +1,34 @@
-# movie_catalog
+<p align="center">
+<img src="screenshots/logo.png" />
+</p>
 
-A new Flutter application.
+### :clipboard: Check List
+- [x] Configuração do Github.
+- [x] Consumo da API TheMovieDB.
+- [x] Consumo da rota /get-upcoming.
+- [x] Consumo da rota /get-movie-details.
+- [x] Consumo de Image Network, disponibilizado pela API.
+- [x] Listagens de filmes lançamento no Brasil (neste caso, a chamada está sem region, pois não está retornando resultados.
+- [x] Página de detalhes do filme.
+- [x] Revisar boas praticas e warnings do Dart.
+- [ ] Separar dados de ViewModel e Data.
+- [ ] Separar Widgets de UI em modulos.
+- [ ] Revisar Clean Code.
+- [ ] Escrever testes unitários.
+- [ ] traduzir README.md.
 
-## Getting Started
+### :electric_plug: Versões das tecnologias
 
-This project is a starting point for a Flutter application.
+- mobx
+- flutter_mobx
+- flutter_icons
+- http
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+### Screens preview
+Home Screen: <br/>
+<img src="screenshots/screen2.png" /> <br/>
+Detail Screen: <br/>
+<img src="screenshots/screen1.png" /> <br/>
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### <a href="https://www.linkedin.com/in/fabiano-gadenz-9186b0154/">Connect me in LinkedIn</a>
