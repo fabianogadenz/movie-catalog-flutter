@@ -5,6 +5,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:moviecatalog/data/movieapi_store.dart';
 import 'package:moviecatalog/models/movie.dart';
 import 'package:moviecatalog/models/movie_detail.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 
 class BookPage extends StatefulWidget {
   final int index;
@@ -355,18 +357,22 @@ class _BookPageState extends State<BookPage> {
                   // buy ticket container
                   Flexible(
                     flex: 3,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(radius / 2),
-                        color: Colors.black,
-                      ),
-                      child: Center(
-                        child: Text(
-                          "Recomendar".toUpperCase(),
-                          style: TextStyle(
-                            fontSize: 14.0,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w400,
+                    child: GestureDetector(
+                      onTap: () async => await launch(
+                          "https://wa.me/55045991025167?text=Ol%C3%A1%20Fabiano,%20muito%20legal%20sua%20abordagem%20nesse%20app!"),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(radius / 2),
+                          color: Colors.black,
+                        ),
+                        child: Center(
+                          child: Text(
+                            "Recomendar".toUpperCase(),
+                            style: TextStyle(
+                              fontSize: 14.0,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
                         ),
                       ),

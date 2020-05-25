@@ -11,11 +11,12 @@
 - [x] Listagens de filmes lançamento no Brasil (neste caso, a chamada está sem region, pois não está retornando resultados.
 - [x] Página de detalhes do filme.
 - [x] Revisar boas praticas e warnings do Dart.
+- [x] Recomendar um filme pelo whatsapp.
 - [ ] Separar dados de ViewModel e Data.
 - [ ] Separar Widgets de UI em modulos.
 - [ ] Revisar Clean Code.
 - [ ] Escrever testes unitários.
-- [ ] traduzir README.md.
+- [ ] Traduzir README.md.
 
 ### :electric_plug: Versões das tecnologias
 
@@ -23,6 +24,7 @@
 - flutter_mobx
 - flutter_icons
 - http
+- url_launcher
 
 
 ### Screens preview

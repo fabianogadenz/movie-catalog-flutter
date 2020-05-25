@@ -311,7 +311,6 @@ class _MovieAppState extends State<MovieApp> {
                                       )
                                     ],
                                   ),
-//                        child: Placeholder(),
                                 ),
                               );
                             },
