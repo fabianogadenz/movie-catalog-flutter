@@ -1,5 +1,5 @@
 <p align="center">
-<img src="screenshots/logo.png" />
+<img src="assets/screenshots/logo.png" width="400" />
 </p>
 
 ### :clipboard: Check List
@@ -27,8 +27,8 @@
 
 ### Screens preview
 Home Screen: <br/>
-<img src="assets/screenshots/screen2.png" /> <br/>
+<img src="assets/screenshots/screen2.png" height="400" /> <br/>
 Detail Screen: <br/>
-<img src="assets/screenshots/screen1.png" /> <br/>
+<img src="assets/screenshots/screen1.png" height="400" /> <br/>
 
 ### <a href="https://www.linkedin.com/in/fabiano-gadenz-9186b0154/">Connect me in LinkedIn</a>
